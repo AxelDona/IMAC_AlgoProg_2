@@ -1,21 +1,42 @@
-#include <QApplication>
-#include <time.h>
+#include <iostream>
 
-#include "tp2.h"
+using namespace std;
 
-MainWindow* w = nullptr;
+void displayTab(int tab[], int size);
+void triSelection(int* tab, int size);
 
-void selectionSort(Array& toSort){
-	// selectionSort
+int main(){
+    int size = 7;
+    int tab[size] = {5, 12, 1, 99, 8, 56, 13};
+    cout << endl;
+    displayTab(tab, size);
+    cout << endl << "--- TRI PAR SÉLECTION ---" << endl << endl;
+    triSelection(tab, size);
+    displayTab(tab, size);
 }
 
-int main(int argc, char *argv[])
-{
-	QApplication a(argc, argv);
-    uint elementCount=15; // number of elements to sort
-    MainWindow::instruction_duration = 100; // delay between each array access (set, get, insert, ...)
-    w = new TestMainWindow(selectionSort); // window which display the behavior of the sort algorithm
-    w->show();
+void displayTab(int tab[], int size){
+    cout << "Tableau : ";
+    for(int i=0; i<size; i++){
+        cout << tab[i] << ", ";
+    }
+    cout << endl;
+}
 
-	return a.exec();
+void triSelection(int* tab, int size){
+    int min;
+    int index;
+
+    for(int j=0;j<size;j++){
+        min = tab[j];
+        index = tab[j];
+        for(int i=j+1;i<size;i++){
+            if(tab[i] < min){
+                min = tab[i];
+                index = i;
+            }
+        }
+        tab[index] = tab[j];
+        tab[j] = min;
+    }
 }

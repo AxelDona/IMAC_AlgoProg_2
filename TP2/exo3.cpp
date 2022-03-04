@@ -1,23 +1,37 @@
-#include <QApplication>
-#include <time.h>
+#include <iostream>
 
-#include "tp2.h"
+using namespace std;
 
-MainWindow* w=nullptr;
+void displayTab(int tab[], int size);
+void triBulles(int* tab, int size);
 
-
-void bubbleSort(Array& toSort){
-	// bubbleSort
+int main(){
+    int size = 7;
+    int tab[size] = {5, 12, 1, 99, 8, 56, 13};
+    cout << endl;
+    displayTab(tab, size);
+    cout << endl << "--- TRI À BULLES ---" << endl << endl;
+    triBulles(tab, size);
+    displayTab(tab, size);
 }
 
+void displayTab(int tab[], int size){
+    cout << "Tableau : ";
+    for(int i=0; i<size; i++){
+        cout << tab[i] << ", ";
+    }
+    cout << endl;
+}
 
-int main(int argc, char *argv[])
-{
-	QApplication a(argc, argv);
-	uint elementCount=20;
-	MainWindow::instruction_duration = 100;
-	w = new TestMainWindow(bubbleSort);
-	w->show();
-
-	return a.exec();
+void triBulles(int* tab, int size){
+    int stock;
+    for(int i=0; i<size; i++){
+        for(int j=0; j<size-1; j++){
+            if(tab[j] > tab[j+1]){
+                stock = tab[j];
+                tab[j] = tab[j+1];
+                tab[j+1] = stock;
+            }
+        }
+    }
 }

@@ -1,38 +1,59 @@
-#include <QApplication>
-#include <time.h>
+#include <iostream>
 
-#include "tp2.h"
+using namespace std;
 
+void displayTab(int tab[], int size);
+void triRapide(int* tab, int size);
 
-MainWindow* w=nullptr;
-
-void recursivQuickSort(Array& toSort, int size)
-{
-	// stop statement = condition + return (return stop the function even if it does not return anything)
-	
-	Array& lowerArray = w->newArray(size);
-	Array& greaterArray= w->newArray(size);
-	int lowerSize = 0, greaterSize = 0; // effectives sizes
-
-	// split
-	
-	// recursiv sort of lowerArray and greaterArray
-
-	// merge
+int main(){
+    int size = 7;
+    int tab[size] = {5, 12, 1, 99, 8, 56, 13};
+    cout << endl;
+    displayTab(tab, size);
+    cout << endl << "--- TRI RAPIDE ---" << endl << endl;
+    triRapide(tab, size);
+    displayTab(tab, size);
 }
 
-void quickSort(Array& toSort){
-	recursivQuickSort(toSort, toSort.size());
+void displayTab(int tab[], int size){
+    cout << "Tableau : ";
+    for(int i=0; i<size; i++){
+        cout << tab[i] << ", ";
+    }
+    cout << endl;
 }
 
+void triRapide(int* tab, int size){
 
-int main(int argc, char *argv[])
-{
-	QApplication a(argc, argv);
-	uint elementCount=20;
-	MainWindow::instruction_duration = 50;
-    w = new TestMainWindow(quickSort);
-	w->show();
+    if(size<=1){
+        return;
+    }
 
-	return a.exec();
+    int pivot = tab[0];
+    int lowers[size];
+    int lowersSize=0;
+    int greaters[size];
+    int greatersSize=0;
+
+    for(int i=1; i<size; i++){
+        if(tab[i]>pivot){
+            greaters[greatersSize]=tab[i];
+            greatersSize++;
+        } else {
+            lowers[lowersSize]=tab[i];
+            lowersSize++;
+        }
+    }
+
+    triRapide(greaters, greatersSize);
+    triRapide(lowers, lowersSize);
+
+    for(int j=0; j<lowersSize; j++){
+        tab[j]=lowers[j];
+    }
+    tab[lowersSize]=pivot;
+    for(int k=0; k<greatersSize; k++){
+        tab[k+lowersSize+1]=greaters[k];
+    }
+
 }

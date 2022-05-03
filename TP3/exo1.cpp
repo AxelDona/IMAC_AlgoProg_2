@@ -2,34 +2,35 @@
 
 using namespace std;
 
-int binarySearch(int tab[], int toSearch, int start, int end);
+int binarySearch(int tab[], int toSearch, int size);
 void displayTab(int tab[], int size);
 
 int main(){
     int size = 11;
     int tab[size] = {2, 6, 7, 9, 15, 22, 51, 53, 57, 68, 75};
-    int start = 0;
-    int end = size;
     int toSearch;
-    cout << displayTab(tab, size) << endl;
+    displayTab(tab, size);
     cout << "Entrez le nombre à rechercher dans le tableau :" << endl;
     cin >> toSearch;
-    binarySearch(tab, toSearch, start, end);
+    cout << binarySearch(tab, toSearch, size) << endl;
 }
 
-int binarySearch(int tab[], int toSearch, int start, int end){
-    while(start < end){
-        int mid = (start+end)/2;
+int binarySearch(int tab[], int toSearch, int size){
 
-        if (toSearch === mid){
+    int start = 0;
+    int end = size;
+    int mid = 0;
+
+    while(start < end){
+        mid = (start+end)/2;
+
+        if (toSearch == tab[mid]){
             int foundIndex = mid;
             return foundIndex;
         } else if (toSearch > tab[mid]){
             start = mid+1;
-            binarySearch(tab, toSearch, start, end);
         } else if (toSearch < tab[mid]){
             end = mid;
-            binarySearch(tab, toSearch, start, end);
         }
     }
     return -1;

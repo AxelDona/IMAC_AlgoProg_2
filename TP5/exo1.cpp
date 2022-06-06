@@ -1,55 +1,60 @@
-#include <tp5.h>
-#include <QApplication>
-#include <time.h>
+#include <iostream>
+#include <array>
 
-MainWindow* w = nullptr;
+using namespace std;
 
+struct HashTable {
 
-std::vector<string> TP5::names(
-{
-    "Yolo", "Anastasiya", "Clement", "Sirine", "Julien", "Sacha", "Leo", "Margot",
-    "JoLeClodo", "Anais", "Jolan", "Marie", "Cindy", "Flavien", "Tanguy", "Audrey",
-    "Mr.PeanutButter", "Bojack", "Mugiwara", "Sully", "Solem",
-    "Leo", "Nils", "Vincent", "Paul", "Zoe", "Julien", "Matteo",
-    "Fanny", "Jeanne", "Elo"
-});
+    int size;
+    string* tab;
 
+    void display() {
+        for (int i = 0; i < this->size; i++) {
+            cout << this->tab[i] << ", " ;
+        }
+        cout << endl << endl;
+    }
 
-int HashTable::hash(std::string element)
-{
-    // use this->size() to get HashTable size
-    return 0;
-}
+    int hash(string a) {
 
-void HashTable::insert(std::string element)
-{
-    // use (*this)[i] or this->get(i) to get a value at index i
-}
+        if (this->size < (int)a[0]) {
+            return (int)a[0] % this->size;
+        }
 
-/**
- * @brief buildHashTable: fill the HashTable with given names
- * @param table table to fiil
- * @param names array of names to insert
- * @param namesCount size of names array
- */
-void buildHashTable(HashTable& table, std::string* names, int namesCount)
-{
+        return (int)a[0];
+    }
 
-}
+    void insert(string a) {
+        int value = hash(a);
+        this->tab[value] = a;
+    }
 
-bool HashTable::contains(std::string element)
-{
-    // Note: Do not use iteration (for, while, ...)
-    return false;
-}
+    bool contains(string a) {
+        for (int i=0; i<this->size; i++) {
+            if (this->tab[i] == a) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
 
 
-int main(int argc, char *argv[])
-{
-	QApplication a(argc, argv);
-	MainWindow::instruction_duration = 10;
-	w = new HashWindow();
-	w->show();
+int main(){
+    HashTable* newHash = new HashTable;
+    newHash->size = 7;
+    string words[] = {"Oui", "Grille-pain", "Zidane", "Piste", "Nuit", "Ohlala", "Gugu"};
+    newHash->tab = words;
 
-	return a.exec();
+    cout << "--- Affichage des mots ---" << endl << endl;
+    newHash->display();
+
+    cout << "--- Insertion d'un mot ---" << endl << endl;
+    newHash->insert("Cramoisissant");
+    newHash->display();
+
+    cout << "--- Test de présence de mots ---" << endl << endl;
+    cout << "Non : " << newHash->contains("Non") << endl;
+    cout << "Cramoisissant : " << newHash->contains("Cramoisissant") << endl;
+
 }

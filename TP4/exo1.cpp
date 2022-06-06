@@ -1,52 +1,58 @@
-#include "tp4.h"
-#include "mainwindow.h"
+#include <iostream>
+#include <array>
 
-#include <QApplication>
-#include <time.h>
-#include <stdio.h>
+using namespace std;
 
-MainWindow* w = nullptr;
-using std::size_t;
-using std::string;
+struct heap{
+    int *heapArr;
+    int size = 0;
 
-int Heap::leftChild(int nodeIndex)
-{
-    return 0;
-}
+    void displayHeap(){
+        cout << endl << "-- Heap display --" << endl;
+        for(int i=0; i < (this->size); i++){
+            cout << this->heapArr[i] << ", ";
+        }
+        cout << endl;
+    };
 
-int Heap::rightChild(int nodeIndex)
-{
-    return 0;
-}
+    void insertHeapNode(int value){
+        int i = this->size;
+        this->heapArr[i] = value;
+        heapify(i);
+        this->size++;
+    }
 
-void Heap::insertHeapNode(int heapSize, int value)
-{
-	// use (*this)[i] or this->get(i) to get a value at index i
-	int i = heapSize;
-}
+    void heapify(int i){
+        int parent;
+        parent = (i-1)/2;
+        if(parent>=0){
+            if(this->heapArr[parent] < this->heapArr[i]){
+                swap(this->heapArr[parent],this->heapArr[i]);
+                heapify(parent);
+            }
+        }
+    }
 
-void Heap::heapify(int heapSize, int nodeIndex)
-{
-	// use (*this)[i] or this->get(i) to get a value at index i
-	int i_max = nodeIndex;
-}
+    void buildHeap(int array[], int size){
+        for (int i = 0; i < size; i++){
+            this->insertHeapNode(array[i]);
+        }
+    }
+};
 
-void Heap::buildHeap(Array& numbers)
-{
-
-}
-
-void Heap::heapSort()
-{
-
-}
-
-int main(int argc, char *argv[])
-{
-	QApplication a(argc, argv);
-    MainWindow::instruction_duration = 50;
-    w = new HeapWindow();
-	w->show();
-
-	return a.exec();
+int main(){
+    heap* myHeap = new heap;
+    myHeap->insertHeapNode(9);
+    myHeap->insertHeapNode(8);
+    myHeap->insertHeapNode(14);
+    myHeap->insertHeapNode(22);
+    myHeap->insertHeapNode(3);
+    myHeap->insertHeapNode(43);
+    myHeap->insertHeapNode(12);
+    myHeap->displayHeap();
+    cout << endl << "Building new heap from array..." << endl << endl;
+    int array[7] = {5, 16, 18, 2, 188, 4, 13};
+    heap* anotherHeap = new heap;
+    anotherHeap->buildHeap(array, 7);
+    anotherHeap->displayHeap();
 }
